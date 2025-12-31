@@ -1,5 +1,7 @@
 package net.keencriptid.agriculture;
 
+import net.keencriptid.agriculture.block.ModBlock;
+import net.keencriptid.agriculture.item.ModCreativeModeTabs;
 import net.keencriptid.agriculture.item.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
 import org.slf4j.Logger;
@@ -39,7 +41,10 @@ public class Agriculture {
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
+        ModCreativeModeTabs.register(modEventBus);
+
         ModItems.register(modEventBus);
+        ModBlock.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -54,12 +59,16 @@ public class Agriculture {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS){
+        if (event.getTabKey() == ModCreativeModeTabs.AGRICULTURE_ITEMS_TAB){
             event.accept(ModItems.CUCUMBER);
             event.accept(ModItems.CUCUMBER_SLICE);
         }
-        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES){
+        if (event.getTabKey() == ModCreativeModeTabs.AGRICULTURE_BLOCKS_TAB){
             event.accept(ModItems.WATERING_CAN);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
+            event.accept(ModBlock.COOKING_POT);
         }
 
     }

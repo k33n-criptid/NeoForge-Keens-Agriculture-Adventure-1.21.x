@@ -1,5 +1,10 @@
 {
   "item.agriculture.cucumber": "Cucumber",
   "item.agriculture.cucumber_slice": "Cucumber Slice",
-  "item.agriculture.watering_can": "Watering Can"
+  "item.agriculture.watering_can": "Watering Can",
+
+  "block.agriculture.cooking_pot": "Cooking Pot",
+
+  "creativetab.agriculture.agriculture_items": "Agriculture Items",
+  "creativetab.agriculture.agriculture_blocks": "Agriculture Blocks"
 }
