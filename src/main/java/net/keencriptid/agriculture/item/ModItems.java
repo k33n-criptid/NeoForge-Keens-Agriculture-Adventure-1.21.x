@@ -1,6 +1,7 @@
 package net.keencriptid.agriculture.item;
 
 import net.keencriptid.agriculture.Agriculture;
+import net.keencriptid.agriculture.item.custom.WaterStickItem;
 import net.keencriptid.agriculture.item.custom.WateringCanItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -18,6 +19,10 @@ public class ModItems {
 
     public static final DeferredItem<Item> WATERING_CAN = ITEMS.register("watering_can",
             () -> new WateringCanItem(new Item.Properties()));
+
+    public static final DeferredItem<Item> WATER_STICK = ITEMS.register("water_stick",
+            () -> new WaterStickItem(new Item.Properties()));
+
 
 
     public static void register(IEventBus eventBus){

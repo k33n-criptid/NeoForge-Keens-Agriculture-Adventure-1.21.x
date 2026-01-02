@@ -62,12 +62,10 @@ public class Agriculture {
         if (event.getTabKey() == ModCreativeModeTabs.AGRICULTURE_ITEMS_TAB){
             event.accept(ModItems.CUCUMBER);
             event.accept(ModItems.CUCUMBER_SLICE);
+            event.accept(ModItems.WATERING_CAN);
+            event.accept(ModItems.WATER_STICK);
         }
         if (event.getTabKey() == ModCreativeModeTabs.AGRICULTURE_BLOCKS_TAB){
-            event.accept(ModItems.WATERING_CAN);
-        }
-
-        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS){
             event.accept(ModBlock.COOKING_POT);
         }
 

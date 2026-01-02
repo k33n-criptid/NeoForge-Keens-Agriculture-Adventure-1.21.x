@@ -1,10 +1,13 @@
 package net.keencriptid.agriculture.item.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -14,6 +17,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -22,7 +27,7 @@ public class WateringCanItem extends Item {
     private static final int MAX_WATER = 50;
 
     public WateringCanItem(Properties properties) {
-        super(properties.durability(MAX_WATER)); // max durability = max water
+        super(properties.durability(MAX_WATER).stacksTo(1).component(DataComponents.DAMAGE, 50).component(DataComponents.MAX_DAMAGE, 50)); // max durability = max water
     }
 
     private int getWater(ItemStack stack) {
@@ -43,12 +48,23 @@ public class WateringCanItem extends Item {
         ItemStack stack = context.getItemInHand();
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
-        BlockState clickedState = level.getBlockState(pos);
+        BlockState clickedState = level.getBlockState(context.getClickedPos());
+        FluidState fluidState = context.getLevel().getFluidState(pos);
+        FluidState aboveFluidState = context.getLevel().getFluidState(pos.above());
 
         if (!level.isClientSide) {
 
             // --- Refill if clicked on water or water cauldron ---
-            if (clickedState.getBlock() == Blocks.WATER || clickedState.is(Blocks.WATER_CAULDRON)) {
+            if (fluidState.is(FluidTags.WATER) || aboveFluidState.is(FluidTags.WATER)) {
+                if (getWater(stack) < MAX_WATER) {
+                    refillWater(stack);
+                    if (context.getPlayer() != null) {
+                        context.getPlayer().displayClientMessage(Component.literal("Watering can refilled!"), true);
+                        level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1f, 1f);
+                    }
+                }
+            }
+            if (clickedState.is(Blocks.WATER_CAULDRON)){
                 refillWater(stack);
 
                 if (clickedState.is(Blocks.WATER_CAULDRON)) {
