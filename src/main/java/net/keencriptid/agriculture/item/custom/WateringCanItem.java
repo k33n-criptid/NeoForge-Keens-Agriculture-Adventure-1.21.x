@@ -1,5 +1,6 @@
 package net.keencriptid.agriculture.item.custom;
 
+import net.keencriptid.agriculture.block.custom.NutrientSoilBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -7,18 +8,16 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.List;
 
@@ -92,11 +91,11 @@ public class WateringCanItem extends Item {
             )) {
                 BlockState state = level.getBlockState(loopPos);
 
-                if (state.getBlock() instanceof FarmBlock && state.getValue(FarmBlock.MOISTURE) < FarmBlock.MAX_MOISTURE) {
+                if (state.getBlock() instanceof NutrientSoilBlock) {
 
                     if (getWater(stack) <= 0) break; // stop if empty
 
-                    level.setBlock(loopPos, state.setValue(FarmBlock.MOISTURE, FarmBlock.MAX_MOISTURE), 2);
+                    NutrientSoilBlock.water(level, loopPos, state);
                     wateredAny = true;
 
                     consumeWater(stack, 1); // consume 1 water per block

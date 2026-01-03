@@ -31,6 +31,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.agriculture.agriculture_blocks"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModBlock.COOKING_POT);
+                        output.accept(ModBlock.NUTRIENT_SOIL_BLOCK);
                     }).build());
 
 

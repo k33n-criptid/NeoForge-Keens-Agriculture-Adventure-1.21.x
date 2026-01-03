@@ -67,6 +67,7 @@ public class Agriculture {
         }
         if (event.getTabKey() == ModCreativeModeTabs.AGRICULTURE_BLOCKS_TAB){
             event.accept(ModBlock.COOKING_POT);
+            event.accept(ModBlock.NUTRIENT_SOIL_BLOCK);
         }
 
     }

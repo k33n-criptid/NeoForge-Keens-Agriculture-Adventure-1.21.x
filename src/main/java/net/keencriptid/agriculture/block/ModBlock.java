@@ -1,6 +1,7 @@
 package net.keencriptid.agriculture.block;
 
 import net.keencriptid.agriculture.Agriculture;
+import net.keencriptid.agriculture.block.custom.NutrientSoilBlock;
 import net.keencriptid.agriculture.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,6 +22,9 @@ public class ModBlock {
     () -> new Block(BlockBehaviour.Properties.of()
             .noOcclusion().strength(2f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
 
+    public static final DeferredBlock<Block> NUTRIENT_SOIL_BLOCK = registerBlock("nutrient_soil",
+            () -> new NutrientSoilBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1f)));
+
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
@@ -31,6 +35,7 @@ public class ModBlock {
     private static <T extends Block> void registerBlockItem(String name, DeferredBlock<T> block){
         ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
+
 
 
 

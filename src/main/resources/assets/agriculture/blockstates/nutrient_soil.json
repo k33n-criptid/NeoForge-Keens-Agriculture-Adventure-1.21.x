@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "agriculture:block/nutrient_soil_dry"
+    },
+    "moisture=1": {
+      "model": "agriculture:block/nutrient_soil_dry"
+    },
+    "moisture=2": {
+      "model": "agriculture:block/nutrient_soil_dry"
+    },
+    "moisture=3": {
+      "model": "agriculture:block/nutrient_soil_dry"
+    },
+    "moisture=4": {
+      "model": "agriculture:block/nutrient_soil_dry"
+    },
+    "moisture=5": {
+      "model": "agriculture:block/nutrient_soil_dry"
+    },
+    "moisture=6": {
+      "model": "agriculture:block/nutrient_soil_wet"
+    },
+    "moisture=7": {
+      "model": "agriculture:block/nutrient_soil_wet"
+    }
+  }
+}
