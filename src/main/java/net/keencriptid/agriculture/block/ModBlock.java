@@ -23,7 +23,7 @@ public class ModBlock {
             .noOcclusion().strength(2f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
 
     public static final DeferredBlock<Block> NUTRIENT_SOIL_BLOCK = registerBlock("nutrient_soil",
-            () -> new NutrientSoilBlock(BlockBehaviour.Properties.of().noOcclusion().strength(1f)));
+            () -> new NutrientSoilBlock(BlockBehaviour.Properties.of().sound(SoundType.ROOTED_DIRT).noOcclusion().strength(0.6f).randomTicks()));
 
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){

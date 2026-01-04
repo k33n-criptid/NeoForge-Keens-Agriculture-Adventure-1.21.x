@@ -15,21 +15,20 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 
 public class NutrientSoilBlock extends FarmBlock {
     private static final int DRY_CHANCE = 10;
-    public static final IntegerProperty DRY_TICKS = IntegerProperty.create("dry_ticks", 0, 20);
+    public static final int MAX_DRY_TICKS = 20;
+    public static final IntegerProperty DRY_TICKS = IntegerProperty.create("dry_ticks", 0, MAX_DRY_TICKS);
 
     public NutrientSoilBlock(Properties properties){
         super(properties);
 
-        this.registerDefaultState(this.defaultBlockState()
-                .setValue(MOISTURE, MAX_MOISTURE)
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(MOISTURE, 0)
                 .setValue(DRY_TICKS, 0));
     }
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int moisture = state.getValue(MOISTURE);
-
-        System.out.println("random tick on soil at" + pos + ", moisture: " + moisture);
 
         if (level.isRainingAt(pos.above())){
             if (moisture < MAX_MOISTURE) {
@@ -40,7 +39,8 @@ public class NutrientSoilBlock extends FarmBlock {
             level.setBlock(pos, state.setValue(MOISTURE, moisture - 1), 2);
         }
         if (moisture == 0){
-            int dryTicks = state.getValue(DRY_TICKS) + 1;
+            int current = state.getValue(DRY_TICKS) + 1;
+            int dryTicks = Math.min(current + 1, MAX_DRY_TICKS);
             if (dryTicks >= 5){
                 BlockPos above = pos.above();
                 BlockState cropState = level.getBlockState(above);
@@ -48,7 +48,9 @@ public class NutrientSoilBlock extends FarmBlock {
                     level.destroyBlock(above, true);
                 }
             }
-            level.setBlock(pos, state.setValue(DRY_TICKS, dryTicks), 2);
+            if (dryTicks != current) {
+                level.setBlock(pos, state.setValue(DRY_TICKS, dryTicks), 2);
+            }
         }
         else {
             if (state.getValue(DRY_TICKS) != 0){
@@ -94,4 +96,5 @@ public class NutrientSoilBlock extends FarmBlock {
         }
         super.fallOn(level, state, pos, entity, fallDistance);
     }
+
 }

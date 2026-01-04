@@ -42,6 +42,10 @@ public class WateringCanItem extends Item {
         stack.setDamageValue(0); // full water = zero damage
     }
 
+    public boolean isFull(ItemStack stack){
+        return getWater(stack) >= MAX_WATER;
+    }
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getItemInHand();
@@ -52,33 +56,37 @@ public class WateringCanItem extends Item {
         FluidState aboveFluidState = context.getLevel().getFluidState(pos.above());
 
         if (!level.isClientSide) {
+            if (!isFull(stack)) {
 
-            // --- Refill if clicked on water or water cauldron ---
-            if (fluidState.is(FluidTags.WATER) || aboveFluidState.is(FluidTags.WATER)) {
-                if (getWater(stack) < MAX_WATER) {
+                // --- Refill if clicked on water or water cauldron ---
+                if (fluidState.is(FluidTags.WATER) || aboveFluidState.is(FluidTags.WATER)) {
+                    if (getWater(stack) < MAX_WATER) {
+                        refillWater(stack);
+                        if (context.getPlayer() != null) {
+                            context.getPlayer().displayClientMessage(Component.literal("Watering can refilled!"), true);
+                            level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1f, 1f);
+                        }
+                    }
+                }
+                if (clickedState.is(Blocks.WATER_CAULDRON)) {
                     refillWater(stack);
+
+                    if (clickedState.is(Blocks.WATER_CAULDRON)) {
+                        int cauldronLevel = clickedState.getValue(BlockStateProperties.LEVEL_CAULDRON);
+                        if (cauldronLevel > 1) {
+                            level.setBlock(pos, clickedState.setValue(BlockStateProperties.LEVEL_CAULDRON, cauldronLevel - 1), 3);
+                        } else {
+                            level.setBlock(pos, Blocks.CAULDRON.defaultBlockState(), 3);
+                        }
+                    }
+
                     if (context.getPlayer() != null) {
                         context.getPlayer().displayClientMessage(Component.literal("Watering can refilled!"), true);
                         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1f, 1f);
                     }
-                }
-            }
-            if (clickedState.is(Blocks.WATER_CAULDRON)){
-                refillWater(stack);
 
-                if (clickedState.is(Blocks.WATER_CAULDRON)) {
-                    int cauldronLevel = clickedState.getValue(BlockStateProperties.LEVEL_CAULDRON);
-                    if (cauldronLevel > 0) {
-                        level.setBlock(pos, clickedState.setValue(BlockStateProperties.LEVEL_CAULDRON, cauldronLevel - 1), 3);
-                    }
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-
-                if (context.getPlayer() != null) {
-                    context.getPlayer().displayClientMessage(Component.literal("Watering can refilled!"), true);
-                    level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1f, 1f);
-                }
-
-                return InteractionResult.sidedSuccess(level.isClientSide);
             }
 
             // --- Water farmland in 3x3 area ---
