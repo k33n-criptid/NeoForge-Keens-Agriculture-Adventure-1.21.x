@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "agriculture:cooking_pot",
+    "agriculture:potash",
+    "agriculture:phosphorite"
+  ]
+}

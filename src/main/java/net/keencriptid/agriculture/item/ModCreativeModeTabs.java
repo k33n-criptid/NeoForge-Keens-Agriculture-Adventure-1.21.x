@@ -23,6 +23,10 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.CUCUMBER);
                         output.accept(ModItems.CUCUMBER_SLICE);
                         output.accept(ModItems.WATERING_CAN);
+                        output.accept(ModItems.PHOSPHORITE_PEBBLE);
+                        output.accept(ModItems.POTASH_PEBBLE);
+                        output.accept(ModItems.COMPOST);
+                        output.accept(ModItems.FERTILIZER);
                     }).build());
 
     public static final Supplier<CreativeModeTab> AGRICULTURE_BLOCKS_TAB = CREATIVE_MODE_TAB.register("agriculture_blocks_tab",
@@ -32,6 +36,8 @@ public class ModCreativeModeTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModBlock.COOKING_POT);
                         output.accept(ModBlock.NUTRIENT_SOIL_BLOCK);
+                        output.accept(ModBlock.PHOSPHORITE);
+                        output.accept(ModBlock.POTASH);
                     }).build());
 
 

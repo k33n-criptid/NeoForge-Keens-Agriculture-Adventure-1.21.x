@@ -3,9 +3,11 @@ package net.keencriptid.agriculture.block;
 import net.keencriptid.agriculture.Agriculture;
 import net.keencriptid.agriculture.block.custom.NutrientSoilBlock;
 import net.keencriptid.agriculture.item.ModItems;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -20,11 +22,18 @@ public class ModBlock {
 
     public static final DeferredBlock<Block> COOKING_POT = registerBlock("cooking_pot",
     () -> new Block(BlockBehaviour.Properties.of()
-            .noOcclusion().strength(2f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
+            .noOcclusion().strength(1f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
 
     public static final DeferredBlock<Block> NUTRIENT_SOIL_BLOCK = registerBlock("nutrient_soil",
             () -> new NutrientSoilBlock(BlockBehaviour.Properties.of().sound(SoundType.ROOTED_DIRT).noOcclusion().strength(0.6f).randomTicks()));
 
+    public static final DeferredBlock<Block> POTASH = registerBlock("potash",
+            () -> new DropExperienceBlock(UniformInt.of(2, 4),
+                    BlockBehaviour.Properties.of().strength(3f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
+
+    public static final DeferredBlock<Block> PHOSPHORITE = registerBlock("phosphorite",
+            () -> new DropExperienceBlock(UniformInt.of(2, 4),
+                    BlockBehaviour.Properties.of().strength(3f).requiresCorrectToolForDrops().sound(SoundType.STONE)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

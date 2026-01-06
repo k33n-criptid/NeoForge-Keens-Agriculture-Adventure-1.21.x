@@ -64,10 +64,16 @@ public class Agriculture {
             event.accept(ModItems.CUCUMBER_SLICE);
             event.accept(ModItems.WATERING_CAN);
             event.accept(ModItems.WATER_STICK);
+            event.accept(ModItems.PHOSPHORITE_PEBBLE);
+            event.accept(ModItems.POTASH_PEBBLE);
+            event.accept(ModItems.COMPOST);
+            event.accept(ModItems.FERTILIZER);
         }
         if (event.getTabKey() == ModCreativeModeTabs.AGRICULTURE_BLOCKS_TAB){
             event.accept(ModBlock.COOKING_POT);
             event.accept(ModBlock.NUTRIENT_SOIL_BLOCK);
+            event.accept(ModBlock.PHOSPHORITE);
+            event.accept(ModBlock.POTASH);
         }
 
     }
